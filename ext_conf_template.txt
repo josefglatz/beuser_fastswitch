@@ -1,3 +1,5 @@
 # Records
 ###########################
 # @TODO: Extension Configuration
+# - CHECKBOX Show also other admins
+# - ...
