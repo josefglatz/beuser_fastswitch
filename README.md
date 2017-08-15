@@ -9,6 +9,14 @@ The beuser_fastswitch extension provides a fast backend user switch for TYPO3 CM
 * Edit another backend user
 * Show record infos of another backend user
 
+## Configuration
+
+### Disable toolbar item for specific backend admin user/-group via UserTSConfig
+
+```
+option.backendToolbarItem.beUserFastwitch.disabled = 1
+```
+
 ---
 
 ## Created by
