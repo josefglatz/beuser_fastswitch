@@ -9,6 +9,8 @@ Fast Backend User Switch (TYPO3 Extension `beuser_fastswitch`)
 * Edit another backend user
 * Show record info of another backend user
 
+![Demo GIF](https://raw.githubusercontent.com/josefglatz/beuser_fastswitch/master/Documentation/Images/beuser-fastswitch-v1-0-2.gif "Extension Demo v1.0.2")
+
 ## Installation
 
 ### Installation using Composer
