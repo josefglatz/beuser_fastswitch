@@ -17,15 +17,6 @@ Fast Backend User Switch (TYPO3 Extension `beuser_fastswitch`)
 
 The recommended way to install the extension is by using [Composer](https://getcomposer.org/). In your Composer based TYPO3 project root, just do `composer require josefglatz/beuser-fastswitch`
 
-#### for TYPO3 9.5LTS
-
-`composer require josefglatz/beuser-fastswitch`
-
-#### for TYPO3 8.7LTS
-
-`composer require josefglatz/beuser-fastswitch:^1`
-
-
 ### Installation as extension from TYPO3 Extension Repository (TER)
 
 Download and install the extension with the TYPO3 CMS extension manager module or directly via [typo3.org](https://typo3.org/extensions/repository/view/beuser_fastswitch).
