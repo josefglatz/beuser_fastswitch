@@ -13,6 +13,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Displays 'SwitchUser' link with sprite icon to change current backend user to target backendUser
+ *
+ * This ViewHelper is basically a clone of \TYPO3\CMS\Beuser\ViewHelpers\SwitchUserViewHelper.
+ * As the mentioned core VH is marked as internal, the modified version was added to this
+ * extension as an own standalone VH.
  */
 class SwitchUserViewHelper extends AbstractViewHelper
 {
@@ -43,6 +47,7 @@ class SwitchUserViewHelper extends AbstractViewHelper
      * @param RenderingContextInterface $renderingContext
      *
      * @return string
+     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
@@ -54,8 +59,9 @@ class SwitchUserViewHelper extends AbstractViewHelper
             return '<span class="btn btn-default disabled">' . $iconFactory->getIcon('empty-empty', Icon::SIZE_SMALL)->render() . '</span>';
         }
         $title = LocalizationUtility::translate('toolbar.beuser.fastswitch.dropdown.user.btn.switch', 'beuser_fastswitch');
+
         return '<a class="' . htmlspecialchars($class) . '" href="' .
-            htmlspecialchars($uriBuilder->buildUriFromModule('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()])) .
+            htmlspecialchars($uriBuilder->buildUriFromRoute('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()])) .
             '" target="_top" title="' . htmlspecialchars($title) . '">' .
             $iconFactory->getIcon('actions-system-backend-user-switch', Icon::SIZE_SMALL)->render('inline') . '</a>';
     }

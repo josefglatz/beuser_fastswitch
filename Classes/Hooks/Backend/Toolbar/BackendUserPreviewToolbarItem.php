@@ -7,7 +7,6 @@ use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
 use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -153,7 +152,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      *
      * @return array
      */
-    protected function getBackendUserRows()
+    protected function getBackendUserRows(): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('be_users');
@@ -194,5 +193,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
         if (!empty($objectRows)) {
             return $objectRows;
         }
+        // Return an empty array if no backend user is available
+        return [];
     }
 }

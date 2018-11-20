@@ -20,7 +20,7 @@
 					</div>
 					<div class="dropdown-table-column dropdown-table-title">
 						<a class="dropdown-table-title-ellipsis"
-						   href="{bu:editRecord(parameters: 'edit[be_users][{user.1.uid}]=edit&returnUrl={returnUrl}')}"
+						   href="{be:uri.editRecord(uid: user.1.uid, table: 'be_users', returnUrl: returnUrl)}"
 						   target="_new" title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.userNameTitle', arguments: {0:user.1.username})}">
 							{user.0.realName}
 						</a>

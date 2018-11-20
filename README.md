@@ -9,13 +9,22 @@ Fast Backend User Switch (TYPO3 Extension `beuser_fastswitch`)
 * Edit another backend user
 * Show record info of another backend user
 
-![Demo GIF](https://raw.githubusercontent.com/josefglatz/beuser_fastswitch/master/Documentation/Images/beuser-fastswitch-v1-0-2.gif "Extension Demo v1.0.2")
+![Demo GIF](https://raw.githubusercontent.com/josefglatz/beuser_fastswitch/master/Documentation/Images/beuser-fastswitch-v1-0-2.gif "Extension Demo v1.0.2 and TYPO3 CMS 8.7LTS")
 
 ## Installation
 
 ### Installation using Composer
 
 The recommended way to install the extension is by using [Composer](https://getcomposer.org/). In your Composer based TYPO3 project root, just do `composer require josefglatz/beuser-fastswitch`
+
+#### for TYPO3 9.5LTS
+
+`composer require josefglatz/beuser-fastswitch`
+
+#### for TYPO3 8.7LTS
+
+`composer require josefglatz/beuser-fastswitch:^1`
+
 
 ### Installation as extension from TYPO3 Extension Repository (TER)
 
