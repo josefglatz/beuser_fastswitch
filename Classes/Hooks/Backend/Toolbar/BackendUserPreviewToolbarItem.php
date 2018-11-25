@@ -38,7 +38,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      */
     public function checkAccess(): bool
     {
-        $conf = $this->getBackendUserAuthentication()->getTSConfig('backendToolbarItem.beUserFastwitch.disabled');
+        $conf = $this->getBackendUserAuthentication()->getTSConfig()['backendToolbarItem.']['beUserFastwitch.']['disabled'];
         return (int)$conf['value'] !== 1 && $this->getBackendUserAuthentication()->isAdmin() && !$this->getBackendUserAuthentication()->user['ses_backuserid'];
     }
 
