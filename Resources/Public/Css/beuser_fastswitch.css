@@ -1,0 +1,4 @@
+#josefglatz-beuserfastswitch-hooks-backend-toolbar-backenduserpreviewtoolbaritem > .dropdown-menu {
+    max-height: 450px;
+    overflow-y: scroll;
+}
