@@ -60,3 +60,7 @@ the last used users you've switched to (maybe a TYPO3 v9 only feature) are liste
 ## Created by
 
 http://josefglatz.at/
+
+## Contribution
+
+* [Alexander Nostadt](https://github.com/AMartinNo1) (Ajax Search)

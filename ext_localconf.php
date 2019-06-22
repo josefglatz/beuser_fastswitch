@@ -8,6 +8,9 @@ call_user_func(
 
             // Extend TYPO3 toolbar: Fast backend user switch
             $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][1502345259] = \JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar\BackendUserPreviewToolbarItem::class;
+
+            $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+            $pageRenderer->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
         }
     },
     $_EXTKEY

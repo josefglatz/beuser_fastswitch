@@ -11,27 +11,32 @@
 <f:if condition="{users}">
 	<f:then>
 		<div class="dropdown-table">
-			<f:for each="{users}" as="user">
-				<div class="dropdown-table-row">
-					<div class="dropdown-table-column dropdown-table-icon">
-						<a href="#" class="t3js-contextmenutrigger" data-table="be_users" data-uid="{user.1.uid}" title="{f:if(condition: '{user.1.description}', then: '{user.1.description} ')}(id={user.1.uid})">
-							<be:avatar backendUser="{user.1.uid}" showIcon="TRUE" />
-						</a>
-					</div>
-					<div class="dropdown-table-column dropdown-table-title">
-						<a class="dropdown-table-title-ellipsis"
-						   href="{be:uri.editRecord(uid: user.1.uid, table: 'be_users', returnUrl: returnUrl)}"
-						   target="_new" title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.userNameTitle', arguments: {0:user.1.username})}">
-							{user.0.realName}
-						</a>
-						<span class="text-muted dropdown-table-title-ellipsis">{user.1.username}</span>
-					</div>
-					<div class="dropdown-table-column dropdown-table-actions">
-						<f:render section="Info" arguments="{_all}" />
-						<f:render section="Switch" arguments="{_all}" />
+			<form action="" role="search" name="beuser-fastswitch-search">
+				<div class="form-group">
+					<div class="form-control-holder">
+						<div class="form-control-icon">
+							<core:icon identifier="apps-toolbar-menu-search" size="small"/>
+						</div>
+						<div class="form-control-clearable">
+							<input
+									type="text"
+									class="form-control"
+									placeholder="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search')}"
+									id="beuser-fastswitch-search-mask" />
+						</div>
 					</div>
 				</div>
-			</f:for>
+			</form>
+			<div id="beuser-fastswitch-ajax-result">
+				<f:if condition="{users}">
+					<f:then>
+						<f:render partial="UserList" arguments="{users: users}"/>
+					</f:then>
+					<f:else>
+						{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.startSearch')}
+					</f:else>
+				</f:if>
+			</div>
 		</div>
 	</f:then>
 	<f:else>
@@ -40,15 +45,4 @@
 		</p>
 	</f:else>
 </f:if>
-
-<f:section name="Info">
-	<a class="dropdown-table-actions-btn dropdown-table-actions-btn-edit" href="#"
-	   onclick="top.launchView('be_users', '{user.1.uid}'); return false;"
-	   title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.btn.info', arguments: {0:user.1.username})}">
-		<core:icon identifier="actions-document-info" alternativeMarkupIdentifier="inline" />
-	</a>
-</f:section>
-<f:section name="Switch">
-	<buf:switchUser backendUser="{user.0}" class="dropdown-table-actions-btn dropdown-table-actions-btn-delete" />
-</f:section>
 </html>
