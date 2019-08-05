@@ -1,0 +1,47 @@
+<html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+      xmlns:bu="http://typo3.org/ns/TYPO3/CMS/Beuser/ViewHelpers"
+      xmlns:buf="http://typo3.org/ns/JosefGlatz/BeuserFastswitch/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+    <f:if condition="{users}">
+        <f:then>
+            <f:for each="{users}" as="user">
+                <div class="beuser-fastswitch__useritem">
+                    <div class="beuser-fastswitch__useritem-icon">
+                        <a href="#"
+                           class="t3js-contextmenutrigger"
+                           data-table="be_users"
+                           data-uid="{user.uid}"
+                           title="{f:if(condition: '{user.description}', then: '{user.description} ')}(id={user.uid})">
+                            <be:avatar backendUser="{user.uid}" showIcon="TRUE" />
+                        </a>
+                    </div>
+                    <div class="beuser-fastswitch__useritem-title">
+                        <a class="dropdown-table-title-ellipsis"
+                           href="{be:uri.editRecord(uid: user.uid, table: 'be_users', returnUrl: returnUrl)}"
+                           target="_new" title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.userNameTitle', arguments: {0:user.username})}">
+                            {user.realName}
+                        </a>
+                        <span class="text-muted dropdown-table-title-ellipsis">{user.username}</span>
+                    </div>
+                    <div class="beuser-fastswitch__useritem-actions">
+                        <f:render section="Info" arguments="{user: user}" />
+                        <f:render section="Switch" arguments="{user: user}" />
+                    </div>
+                </div>
+            </f:for>
+        </f:then>
+    </f:if>
+
+    <f:section name="Info">
+        <a class="dropdown-table-actions-btn dropdown-table-actions-btn-edit" href="#"
+           onclick="top.launchView('be_users', '{user.uid}'); return false;"
+           title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.btn.info', arguments: {0:user.username})}">
+            <core:icon identifier="actions-document-info" alternativeMarkupIdentifier="inline" />
+        </a>
+    </f:section>
+
+    <f:section name="Switch">
+        <buf:switchUser backendUser="{user}" class="dropdown-table-actions-btn dropdown-table-actions-btn-delete" />
+    </f:section>
+</html>

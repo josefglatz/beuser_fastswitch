@@ -1,0 +1,10 @@
+<f:if condition="{users}">
+    <f:then>
+        <f:render partial="UserList" arguments="{users: users}"/>
+    </f:then>
+    <f:else>
+        <p>
+            {f:translate(key: 'toolbar.beuser.fastswitch.dropdown.noUsers')}
+        </p>
+    </f:else>
+</f:if>

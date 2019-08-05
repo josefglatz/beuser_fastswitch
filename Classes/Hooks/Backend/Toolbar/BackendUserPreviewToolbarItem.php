@@ -2,13 +2,15 @@
 
 namespace JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar;
 
+use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
-use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
-use TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -17,9 +19,9 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class BackendUserPreviewToolbarItem implements ToolbarItemInterface
 {
     /**
-     * @var array
+     * @var QueryResultInterface|null
      */
-    protected $availableUsers = [];
+    protected $availableUsers = null;
 
     /**
      * Constructor
@@ -27,6 +29,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     public function __construct()
     {
         $this->loadAvailableBeUsers();
+        $this->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
     }
 
     /**
@@ -45,7 +48,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     /**
      * Loads all eligible backend users
      */
-    public function loadAvailableBeUsers()
+    public function loadAvailableBeUsers(): void
     {
         if ($this->checkAccess()) {
             $this->availableUsers = $this->getBackendUserRows();
@@ -56,17 +59,18 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      * Render toolbar icon via Fluid
      *
      * @return string HTML
+     * @throws InvalidExtensionNameException
      */
     public function getItem(): string
     {
-        $view = $this->getFluidTemplateObject('ToolbarItem.html');
-        return $view->render();
+        return $this->getFluidTemplateObject('ToolbarItem.html')->render();
     }
 
     /**
      * Render drop down via Fluid
      *
      * @return string HTML
+     * @throws InvalidExtensionNameException
      */
     public function getDropDown(): string
     {
@@ -125,10 +129,12 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      *
      * @param string $filename Which templateFile should be used.
      * @return StandaloneView
+     * @throws InvalidExtensionNameException
      */
     protected function getFluidTemplateObject(string $filename): StandaloneView
     {
         $view = GeneralUtility::makeInstance(StandaloneView::class);
+
         $view->setLayoutRootPaths([
             'EXT:beuser_fastswitch/Resources/Private/Layouts',
         ]);
@@ -150,50 +156,32 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      * @TODO: Make user configurable (groups, types, username patterns)
      * @TODO: Check if there's another way to access the internal user array of actual backend user IF using internals is the wrong way
      *
-     * @return array
+     * @return QueryResultInterface|null
+     * @throws InvalidQueryException
      */
-    protected function getBackendUserRows(): array
+    protected function getBackendUserRows(): ?QueryResultInterface
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('be_users');
-        $queryBuilder->getRestrictions();
-        $rows = $queryBuilder->select('*')
-            ->from('be_users')
-            ->where(
-                $queryBuilder->expr()
-                    ->andX(
-                        $queryBuilder->expr()->eq(
-                            'admin',
-                            $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-                        ),
-                        $queryBuilder->expr()->neq(
-                            'uid',
-                            $queryBuilder->createNamedParameter($this->getBackendUserAuthentication()->user['uid'], \PDO::PARAM_INT)
-                        )
-                    )
-
-            )
-            ->execute()
-            ->fetchAll();
-
         /** @var $extbaseObjectManager \TYPO3\CMS\Extbase\Object\ObjectManager */
         $extbaseObjectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var $backendUserRepository BackendUserRepository */
         $backendUserRepository = $extbaseObjectManager->get(BackendUserRepository::class);
 
-        foreach ($rows as $row) {
-            /** @var  $userObject BackendUser */
-            $userObject = $backendUserRepository->findByUid($row['uid']);
-            $objectRows[] = [
-                $userObject,
-                $row
-            ];
+        $rows = $backendUserRepository->findNonAdmins();
+
+        if ($rows instanceof QueryResultInterface) {
+            return $rows;
         }
 
-        if (!empty($objectRows)) {
-            return $objectRows;
-        }
-        // Return an empty array if no backend user is available
-        return [];
+        return null;
+    }
+
+    /**
+     * Returns current PageRenderer
+     *
+     * @return PageRenderer
+     */
+    protected function getPageRenderer(): PageRenderer
+    {
+        return GeneralUtility::makeInstance(PageRenderer::class);
     }
 }
