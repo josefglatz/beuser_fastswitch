@@ -10,33 +10,28 @@
 <hr>
 <f:if condition="{users}">
 	<f:then>
-		<div class="dropdown-table">
-			<form action="" role="search" name="beuser-fastswitch-search">
-				<div class="form-group">
-					<div class="form-control-holder">
-						<div class="form-control-icon">
-							<core:icon identifier="apps-toolbar-menu-search" size="small"/>
-						</div>
-						<div class="form-control-clearable">
-							<input
-									type="text"
-									class="form-control"
-									placeholder="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search')}"
-									id="beuser-fastswitch-search-mask" />
-						</div>
+		<form action="" role="search" name="beuser-fastswitch-search" id="beuser-fastswitch-search-form">
+			<div class="form-group">
+				<div class="form-control-holder">
+					<div class="form-control-icon">
+						<core:icon identifier="apps-toolbar-menu-search" size="small"/>
+					</div>
+					<div class="form-control-clearable">
+						<input
+								type="text"
+								class="form-control t3js-clearable"
+								placeholder="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.placeholder')}"
+								id="beuser-fastswitch-search-mask"
+								title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.title')}"
+								autocomplete="off" />
 					</div>
 				</div>
-			</form>
-			<div id="beuser-fastswitch-ajax-result">
-				<f:if condition="{users}">
-					<f:then>
-						<f:render partial="UserList" arguments="{users: users}"/>
-					</f:then>
-					<f:else>
-						{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.startSearch')}
-					</f:else>
-				</f:if>
 			</div>
+		</form>
+		<div id="beuser-fastswitch-ajax-result">
+			<f:if condition="{users}">
+				<f:render partial="UserList" arguments="{users: users}"/>
+			</f:if>
 		</div>
 	</f:then>
 	<f:else>

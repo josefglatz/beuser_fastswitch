@@ -3,23 +3,21 @@
 namespace JosefGlatz\BeuserFastswitch\Domain\Repository;
 
 use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class BackendUserRepository extends \TYPO3\CMS\Beuser\Domain\Repository\BackendUserRepository
 {
     protected $objectType = BackendUser::class;
 
-    public function initializeObject()
-    {
-        parent::initializeObject();
-    }
-
     /**
      * @param string $search
      * @return array|QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws InvalidQueryException
      */
-    public function findByUsernameOrRealName(string $search): QueryResultInterface
+    public function findByMultipleProperties(string $search): QueryResultInterface
     {
         $this->objectType = BackendUser::class;
 
@@ -30,26 +28,39 @@ class BackendUserRepository extends \TYPO3\CMS\Beuser\Domain\Repository\BackendU
                 $queryBuilder->equals('admin', 0),
                 $queryBuilder->logicalOr([
                     $queryBuilder->like('username', "%$search%"),
-                    $queryBuilder->like('realName', "%$search%")
+                    $queryBuilder->like('realName', "%$search%"),
+                    $queryBuilder->like('email', "%$search%"),
+                    $queryBuilder->equals('uid', (int)$search)
                 ])
             ])
         );
+        $queryBuilder->setOrderings([
+            'lastlogin' => QueryInterface::ORDER_DESCENDING,
+        ]);
 
         return $queryBuilder->execute();
     }
 
-    public function findNonAdminsByUids(array $uids): QueryResultInterface
+    /**
+     * @param array $uids
+     * @return QueryResultInterface
+     * @throws InvalidQueryException
+     */
+    public function findNonAdmins($uids = []): QueryResultInterface
     {
         $this->objectType = BackendUser::class;
-
         $queryBuilder = $this->createQuery();
 
+        $constraints[] = $queryBuilder->equals('admin', 0);
+        if (!empty($uids)) {
+            $constraints[] = $queryBuilder->in('uid', $uids);
+        }
         $queryBuilder->matching(
-            $queryBuilder->logicalAnd([
-                $queryBuilder->equals('admin', 0),
-                $queryBuilder->in('uid', $uids)
-            ])
+            $queryBuilder->logicalAnd($constraints)
         );
+        $queryBuilder->setOrderings([
+            'lastlogin' => QueryInterface::ORDER_DESCENDING,
+        ]);
 
         return $queryBuilder->execute();
     }

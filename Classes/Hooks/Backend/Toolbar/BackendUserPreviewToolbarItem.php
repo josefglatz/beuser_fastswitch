@@ -5,8 +5,11 @@ namespace JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar;
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
@@ -26,6 +29,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     public function __construct()
     {
         $this->loadAvailableBeUsers();
+        $this->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
     }
 
     /**
@@ -44,7 +48,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     /**
      * Loads all eligible backend users
      */
-    public function loadAvailableBeUsers()
+    public function loadAvailableBeUsers(): void
     {
         if ($this->checkAccess()) {
             $this->availableUsers = $this->getBackendUserRows();
@@ -55,17 +59,18 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      * Render toolbar icon via Fluid
      *
      * @return string HTML
+     * @throws InvalidExtensionNameException
      */
     public function getItem(): string
     {
-        $view = $this->getFluidTemplateObject('ToolbarItem.html');
-        return $view->render();
+        return $this->getFluidTemplateObject('ToolbarItem.html')->render();
     }
 
     /**
      * Render drop down via Fluid
      *
      * @return string HTML
+     * @throws InvalidExtensionNameException
      */
     public function getDropDown(): string
     {
@@ -124,6 +129,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      *
      * @param string $filename Which templateFile should be used.
      * @return StandaloneView
+     * @throws InvalidExtensionNameException
      */
     protected function getFluidTemplateObject(string $filename): StandaloneView
     {
@@ -151,6 +157,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      * @TODO: Check if there's another way to access the internal user array of actual backend user IF using internals is the wrong way
      *
      * @return QueryResultInterface|null
+     * @throws InvalidQueryException
      */
     protected function getBackendUserRows(): ?QueryResultInterface
     {
@@ -159,12 +166,22 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
         /** @var $backendUserRepository BackendUserRepository */
         $backendUserRepository = $extbaseObjectManager->get(BackendUserRepository::class);
 
-        $rows = $backendUserRepository->findNonAdminsByUids($GLOBALS['BE_USER']->uc['recentSwitchedToUsers']);
+        $rows = $backendUserRepository->findNonAdmins();
 
         if ($rows instanceof QueryResultInterface) {
             return $rows;
         }
 
         return null;
+    }
+
+    /**
+     * Returns current PageRenderer
+     *
+     * @return PageRenderer
+     */
+    protected function getPageRenderer(): PageRenderer
+    {
+        return GeneralUtility::makeInstance(PageRenderer::class);
     }
 }

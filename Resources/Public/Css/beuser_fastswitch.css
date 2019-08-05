@@ -1,4 +1,36 @@
 #beuser-fastswitch-ajax-result {
-    max-height: 200px;
-    overflow-y: auto;
+	min-height: 0;
+	overflow-y: auto;
+	max-height: 70vh;
+	box-sizing: border-box;
+}
+#beuser-fastswitch-search-form {
+	margin-bottom: 15px;
+}
+.beuser-fastswitch__useritem {
+	display: flex;
+	margin-bottom: 10px;
+	margin-right: 20px;
+}
+.beuser-fastswitch__useritem:hover,
+.beuser-fastswitch__useritem:focus {
+	background: rgba(255,255,255,.05);
+}
+.beuser-fastswitch__useritem:last-child {
+	margin-bottom: 0;
+}
+.beuser-fastswitch__useritem-icon {
+	flex: 0 0 13%;
+}
+.beuser-fastswitch__useritem-title {
+	flex: 0 0 66%;
+	overflow-x: hidden;
+}
+.beuser-fastswitch__useritem-title .dropdown-table-title-ellipsis {
+	max-width: 100%;
+}
+.beuser-fastswitch__useritem-actions {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
 }

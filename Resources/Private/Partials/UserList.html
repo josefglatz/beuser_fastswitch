@@ -6,8 +6,8 @@
     <f:if condition="{users}">
         <f:then>
             <f:for each="{users}" as="user">
-                <div class="dropdown-table-row">
-                    <div class="dropdown-table-column dropdown-table-icon">
+                <div class="beuser-fastswitch__useritem">
+                    <div class="beuser-fastswitch__useritem-icon">
                         <a href="#"
                            class="t3js-contextmenutrigger"
                            data-table="be_users"
@@ -16,7 +16,7 @@
                             <be:avatar backendUser="{user.uid}" showIcon="TRUE" />
                         </a>
                     </div>
-                    <div class="dropdown-table-column dropdown-table-title">
+                    <div class="beuser-fastswitch__useritem-title">
                         <a class="dropdown-table-title-ellipsis"
                            href="{be:uri.editRecord(uid: user.uid, table: 'be_users', returnUrl: returnUrl)}"
                            target="_new" title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.userNameTitle', arguments: {0:user.username})}">
@@ -24,7 +24,7 @@
                         </a>
                         <span class="text-muted dropdown-table-title-ellipsis">{user.username}</span>
                     </div>
-                    <div class="dropdown-table-column dropdown-table-actions">
+                    <div class="beuser-fastswitch__useritem-actions">
                         <f:render section="Info" arguments="{user: user}" />
                         <f:render section="Switch" arguments="{user: user}" />
                     </div>
