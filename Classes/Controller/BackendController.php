@@ -5,6 +5,7 @@ namespace JosefGlatz\BeuserFastswitch\Controller;
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -36,12 +37,11 @@ class BackendController extends ActionController
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @return ResponseInterface
      * @throws InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      */
-    public function userLookupAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function userLookupAction(ServerRequestInterface $request): ResponseInterface
     {
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths([
@@ -66,8 +66,6 @@ class BackendController extends ActionController
 
         $view->assign('users', $userList);
 
-        $response->getBody()->write($view->render());
-        $response = $response->withHeader('Content-Type', 'text/html; charset=utf-8');
-        return $response;
+        return new HtmlResponse($view->render());
     }
 }
