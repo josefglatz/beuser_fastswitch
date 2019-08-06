@@ -17,11 +17,19 @@ Fast Backend User Switch (TYPO3 Extension `beuser_fastswitch`)
 You can search users by **`realName`**, **`username`**, **`email`** or
 **unique ID `uid`**.
 
-The results are ordered by `lastlogin DESC`.
+### Ordering of listed users
 
-### The default user list
+The results are always ordered by `lastlogin DESC`. Since this speeds up
+also the support if some editor is calling you that something isn't
+working. You can then easily switch to the backend user without
+searching for it.
 
-shows you all non-admin users sorted by `lastlogin DESC`.
+### User list item features
+
+* Trigger contextmenu of backend user record (by clicking on the avatar/icon)
+* Edit backend user record (by clicking on the username or realName)
+* Show element information popup (by clicking on the Info-Button)
+* Switch to the backend user (by clicking on the Switch-Button)
 
 ## Screenshots and Demos
 
