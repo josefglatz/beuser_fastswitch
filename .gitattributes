@@ -3,3 +3,4 @@
 /.styleci.yml export-ignore
 /.gitignore export-ignore
 /Documentation/Images/beuser-fastswitch-v1-0-2.gif export-ignore
+/Cheatsheet.md export-ignore
