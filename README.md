@@ -23,6 +23,8 @@ The results are ordered by `lastlogin DESC`.
 
 shows you all non-admin users sorted by `lastlogin DESC`.
 
+## Screenshots and Demos
+
 ![Demo GIF](https://raw.githubusercontent.com/josefglatz/beuser_fastswitch/master/Documentation/Images/beuser-fastswitch-v1-0-2.gif "Extension Demo v1.0.2 and TYPO3 CMS 8.7LTS")
 
 ## Installation
