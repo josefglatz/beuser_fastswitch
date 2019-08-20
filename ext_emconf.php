@@ -4,12 +4,12 @@ $EM_CONF[$_EXTKEY] = [
     'description' => 'Fast backend user switch for TYPO3 CMS administrator users.',
     'category' => 'be',
     'author' => 'Josef Glatz',
-    'author_email' => 'jousch@gmail.com',
-    'author_company' => 'http://jousch.com',
+    'author_email' => 'josefglatz@gmail.com',
+    'author_company' => 'http://www.josefglatz.at',
     'state' => 'stable',
     'createDirs' => '',
     'clearCacheOnLoad' => 1,
-    'version' => '3.0.0',
+    'version' => '3.0.1',
     'constraints' =>
         [
             'depends' =>
