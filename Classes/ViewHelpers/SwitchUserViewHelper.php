@@ -9,7 +9,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 // @TODO: TYPO3_8-7 support removal: Use statement `TYPO3\CMS\Core\Utility\VersionNumberUtility` can be removed
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
@@ -66,7 +66,7 @@ class SwitchUserViewHelper extends AbstractViewHelper
         if (static::isVersion8()) {
             $href = $uriBuilder->buildUriFromModule('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()]);
         } else {
-            $href = $uriBuilder->buildUriFromRoute('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()]);
+            $href = (string)$uriBuilder->buildUriFromRoute('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()]);
         }
 
         return '<a class="' . htmlspecialchars($class) . '" href="' .

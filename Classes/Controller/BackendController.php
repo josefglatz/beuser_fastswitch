@@ -3,6 +3,7 @@
 namespace JosefGlatz\BeuserFastswitch\Controller;
 
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
+use JosefGlatz\BeuserFastswitch\Service\VersionService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
@@ -21,15 +22,18 @@ class BackendController extends ActionController
      * @param string $search
      * @return QueryResultInterface
      * @throws InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     protected function findUserBySearchWord(string $search): QueryResultInterface
     {
         $beusersRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(BackendUserRepository::class);
         return $beusersRepository->findByMultipleProperties($search);
     }
+
     /**
      * @return QueryResultInterface
      * @throws InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     protected function findUsers(): QueryResultInterface
     {
@@ -45,6 +49,9 @@ class BackendController extends ActionController
      * @return ResponseInterface
      * @throws InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
+     *
+     * @noinspection PhpUnused
      */
     public function userLookupAction(ServerRequestInterface $request, ResponseInterface $response = null): ResponseInterface
     {
@@ -69,10 +76,16 @@ class BackendController extends ActionController
             $userList = $this->findUsers();
         }
 
-        $view->assign('users', $userList);
+        $view->assignMultiple(
+            [
+                'users' => $userList,
+                'isVersion8' => VersionService::isVersion8(),
+                'isVersion10' => VersionService::isVersion10(),
+            ]
+        );
 
         // @TODO: TYPO3_8-7 support removal: Remove conditional switch for response
-        if ($this->isVersion8() && $response !== null) {
+        if (VersionService::isVersion8() && $response !== null) {
             $response->getBody()->write($view->render());
             $response = $response->withHeader('Content-Type', 'text/html; charset=utf-8');
 
@@ -80,20 +93,5 @@ class BackendController extends ActionController
         }
 
         return new HtmlResponse($view->render());
-    }
-
-    /**
-     * Check if current TYPO3 version matches 8.7
-     * @TODO: TYPO3_8-7 support removal: Method can be removed
-     *
-     * @return bool
-     */
-    protected function isVersion8(): bool
-    {
-        $constraintVersionMax = 8999999;
-        $constraintVersionMin = 8000000;
-
-        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < $constraintVersionMax
-            && VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) > $constraintVersionMin;
     }
 }

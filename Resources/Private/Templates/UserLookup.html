@@ -3,14 +3,14 @@
 <f:if condition="{users}">
 	<f:then>
 		<f:comment><!-- @TODO: TYPO3_8-7 support removal: Fluid condition can be removed --></f:comment>
-		<buf:condition.isCoreVersion8>
+		<f:if condition="{isVersion8}">
 			<f:then>
 				<f:render partial="TYPO3_8-7/UserList" arguments="{users: users}"/>
 			</f:then>
 			<f:else>
 				<f:render partial="UserList" arguments="{users: users}"/>
 			</f:else>
-		</buf:condition.isCoreVersion8>
+		</f:if>
 	</f:then>
 	<f:else>
 		<p>
