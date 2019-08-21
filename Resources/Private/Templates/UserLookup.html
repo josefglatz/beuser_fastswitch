@@ -1,6 +1,16 @@
+<html xmlns:buf="http://typo3.org/ns/JosefGlatz/BeuserFastswitch/ViewHelpers"
+			data-namespace-typo3-fluid="true">
 <f:if condition="{users}">
 	<f:then>
-		<f:render partial="UserList" arguments="{users: users}"/>
+		<f:comment><!-- @TODO: TYPO3_8-7 support removal: Fluid condition can be removed --></f:comment>
+		<buf:condition.isCoreVersion8>
+			<f:then>
+				<f:render partial="TYPO3_8-7/UserList" arguments="{users: users}"/>
+			</f:then>
+			<f:else>
+				<f:render partial="UserList" arguments="{users: users}"/>
+			</f:else>
+		</buf:condition.isCoreVersion8>
 	</f:then>
 	<f:else>
 		<p>
@@ -8,3 +18,4 @@
 		</p>
 	</f:else>
 </f:if>
+</html>
