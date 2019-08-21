@@ -1,6 +1,4 @@
 <html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
-			xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
-			xmlns:bu="http://typo3.org/ns/TYPO3/CMS/Beuser/ViewHelpers"
 			xmlns:buf="http://typo3.org/ns/JosefGlatz/BeuserFastswitch/ViewHelpers"
 			data-namespace-typo3-fluid="true">
 
@@ -30,7 +28,15 @@
 		</form>
 		<div id="beuser-fastswitch-ajax-result">
 			<f:if condition="{users}">
-				<f:render partial="UserList" arguments="{users: users}"/>
+				<f:comment><!-- @TODO: TYPO3_8-7 support removal: Fluid condition can be removed --></f:comment>
+				<buf:condition.isCoreVersion8>
+					<f:then>
+						<f:render partial="TYPO3_8-7/UserList" arguments="{users: users}"/>
+					</f:then>
+					<f:else>
+						<f:render partial="UserList" arguments="{users: users}"/>
+					</f:else>
+				</buf:condition.isCoreVersion8>
 			</f:if>
 		</div>
 	</f:then>

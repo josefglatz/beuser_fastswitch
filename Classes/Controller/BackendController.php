@@ -7,6 +7,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+// @TODO: TYPO3_8-7 support removal: Use statement `TYPO3\CMS\Core\Utility\VersionNumberUtility` can be removed
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
@@ -36,12 +38,15 @@ class BackendController extends ActionController
     }
 
     /**
+     * @TODO: TYPO3_8-7 support removal: Method userLookupAction(): second parameter can be removed
+     *
      * @param ServerRequestInterface $request
+     * @param ResponseInterface|null $response
      * @return ResponseInterface
      * @throws InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      */
-    public function userLookupAction(ServerRequestInterface $request): ResponseInterface
+    public function userLookupAction(ServerRequestInterface $request, ResponseInterface $response = null): ResponseInterface
     {
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths([
@@ -54,7 +59,7 @@ class BackendController extends ActionController
             GeneralUtility::getFileAbsFileName('EXT:beuser_fastswitch/Resources/Private/Partials'),
         ]);
         $view->getRequest()->setControllerExtensionName('BeuserFastswitch');
-        $view->getRenderingContext()->setControllerName(BackendController::class);
+        $view->getRenderingContext()->setControllerName(__CLASS__);
         $view->getRenderingContext()->setControllerAction('userLookup');
 
         $params = $request->getQueryParams();
@@ -66,6 +71,29 @@ class BackendController extends ActionController
 
         $view->assign('users', $userList);
 
+        // @TODO: TYPO3_8-7 support removal: Remove conditional switch for response
+        if ($this->isVersion8() && $response !== null) {
+            $response->getBody()->write($view->render());
+            $response = $response->withHeader('Content-Type', 'text/html; charset=utf-8');
+
+            return $response;
+        }
+
         return new HtmlResponse($view->render());
+    }
+
+    /**
+     * Check if current TYPO3 version matches 8.7
+     * @TODO: TYPO3_8-7 support removal: Method can be removed
+     *
+     * @return bool
+     */
+    protected function isVersion8(): bool
+    {
+        $constraintVersionMax = 8999999;
+        $constraintVersionMin = 8000000;
+
+        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < $constraintVersionMax
+            && VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) > $constraintVersionMin;
     }
 }

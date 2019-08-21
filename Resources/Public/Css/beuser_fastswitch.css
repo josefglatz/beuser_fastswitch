@@ -34,3 +34,7 @@
 	display: flex;
 	align-items: center;
 }
+.beuser-fastswitch__useritem-actions .btn.disabled {
+	opacity: 0 !important;
+	width: 24px !important;
+}

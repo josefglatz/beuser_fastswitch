@@ -6,6 +6,8 @@ use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+// @TODO: TYPO3_8-7 support removal: Use statement `TYPO3\CMS\Core\Utility\VersionNumberUtility` can be removed
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
@@ -49,7 +51,7 @@ class SwitchUserViewHelper extends AbstractViewHelper
      * @return string
      * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
     {
         $backendUser = $arguments['backendUser'];
         $class = $arguments['class'];
@@ -60,9 +62,30 @@ class SwitchUserViewHelper extends AbstractViewHelper
         }
         $title = LocalizationUtility::translate('toolbar.beuser.fastswitch.dropdown.user.btn.switch', 'beuser_fastswitch');
 
+        // @TODO: TYPO3_8-7 support removal: buildUriFromModule condition (`$href` can be directly set within the return statement)
+        if (static::isVersion8()) {
+            $href = $uriBuilder->buildUriFromModule('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()]);
+        } else {
+            $href = $uriBuilder->buildUriFromRoute('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()]);
+        }
+
         return '<a class="' . htmlspecialchars($class) . '" href="' .
-            htmlspecialchars($uriBuilder->buildUriFromRoute('system_BeuserTxBeuser', ['SwitchUser' => $backendUser->getUid()])) .
-            '" target="_top" title="' . htmlspecialchars($title) . '">' .
+            htmlspecialchars($href) . '" target="_top" title="' . htmlspecialchars($title) . '">' .
             $iconFactory->getIcon('actions-system-backend-user-switch', Icon::SIZE_SMALL)->render('inline') . '</a>';
+    }
+
+    /**
+     * Check if current TYPO3 version matches 8.7
+     * @TODO: TYPO3_8-7 support removal: Method can be removed
+     *
+     * @return bool
+     */
+    protected static function isVersion8(): bool
+    {
+        $constraintVersionMax = 8999999;
+        $constraintVersionMin = 8000000;
+
+        return VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < $constraintVersionMax
+            && VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) > $constraintVersionMin;
     }
 }
