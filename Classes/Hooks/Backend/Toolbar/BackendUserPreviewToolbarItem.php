@@ -3,6 +3,7 @@
 namespace JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar;
 
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
+use JosefGlatz\BeuserFastswitch\Service\VersionService;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Page\PageRenderer;
@@ -41,8 +42,8 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      */
     public function checkAccess(): bool
     {
-        $conf = $this->getBackendUserAuthentication()->getTSConfig()['backendToolbarItem.']['beUserFastwitch.']['disabled'];
-        return (int)$conf['value'] !== 1 && $this->getBackendUserAuthentication()->isAdmin() && !$this->getBackendUserAuthentication()->user['ses_backuserid'];
+        $conf = $this->getBackendUserAuthentication()->getTSConfig()['options.']['backendToolbarItem.']['beUserFastwitch.']['disabled'];
+        return (int)$conf !== 1 && $this->getBackendUserAuthentication()->isAdmin() && !$this->getBackendUserAuthentication()->user['ses_backuserid'];
     }
 
     /**
@@ -76,7 +77,9 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     {
         $view = $this->getFluidTemplateObject('DropDown.html');
         $view->assignMultiple([
-            'users' => $this->availableUsers
+            'users' => $this->availableUsers,
+            'isVersion8' => VersionService::isVersion8(),
+            'isVersion10' => VersionService::isVersion10(),
         ]);
         return $view->render();
     }

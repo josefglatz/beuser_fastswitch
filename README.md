@@ -54,7 +54,7 @@ module or directly via
 ### Disable toolbar item for specific backend admin user/-group via UserTSConfig
 
 ```
-option.backendToolbarItem.beUserFastwitch.disabled = 1
+options.backendToolbarItem.beUserFastwitch.disabled = 1
 ```
 
 ---
