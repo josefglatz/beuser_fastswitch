@@ -35,6 +35,11 @@ searching for it.
 
 ![Demo GIF](https://raw.githubusercontent.com/josefglatz/beuser_fastswitch/master/Documentation/Images/beuser-fastswitch-v1-0-2.gif "Extension Demo v1.0.2 and TYPO3 CMS 8.7LTS")
 
+## Requirements
+
+1. TYPO3 core version support: 8.7 LTS, 9.5 LTS, 10.0, 10.1.0-dev
+2. PHP version: >= 7.2
+
 ## Installation
 
 ### Installation using Composer
