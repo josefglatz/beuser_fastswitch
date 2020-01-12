@@ -22,7 +22,6 @@
 		}
 	},
 	"replace": {
-		"beuser_fastswitch": "self.version",
 		"typo3-ter/beuser-fastswitch": "self.version"
 	},
 	"config": {
