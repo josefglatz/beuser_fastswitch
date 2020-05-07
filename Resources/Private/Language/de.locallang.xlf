@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-05-20T21:04:47Z" product-name="beuser_fastswitch" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="toolbar.beuser.fastswitch.dropdown.title" approved="yes">
+        <source>Fast backend user switch</source>
+        <target state="final">Backend-Benutzer Wechsler</target>
+      </trans-unit>
+      <trans-unit id="toolbar.beuser.fastswitch.dropdown.noUsers" approved="yes">
+        <source>No available backend user found!</source>
+        <target state="final">Keinen zutreffenden Backend-Benutzer gefunden!</target>
+      </trans-unit>
+      <trans-unit id="toolbar.beuser.fastswitch.dropdown.user.userNameTitle" approved="yes">
+        <source>Edit user &quot;%s&quot; in new browser tab</source>
+        <target state="final">Benutzer "%s" in neuer Browser-Tab bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="toolbar.beuser.fastswitch.dropdown.user.btn.switch" approved="yes">
+        <source>Switch to backend user</source>
+        <target state="final">Zu Backend-Benutzer wechseln</target>
+      </trans-unit>
+      <trans-unit id="toolbar.beuser.fastswitch.dropdown.user.btn.info" approved="yes">
+        <source>Show some infos about &quot;%s&quot; in new a browser tab</source>
+        <target state="final">Zeige Infos über "%s" in einem neuen Browser-Tab</target>
+      </trans-unit>
+      <trans-unit id="toolbar.beuser.fastswitch.dropdown.search.placeholder" approved="yes">
+        <source>Search for backend users</source>
+        <target state="final">Suche nach Backend-Benutzern</target>
+      </trans-unit>
+      <trans-unit id="toolbar.beuser.fastswitch.dropdown.search.title" approved="yes">
+        <source>Search for username, realName, email and uid in non-admin users.</source>
+        <target state="final">Suche nach Benutzername, Name, E-Mail und UID</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
