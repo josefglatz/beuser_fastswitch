@@ -1,3 +1,10 @@
 files:
   - source: /Resources/Private/Language
     translation: /%original_path%/%two_letters_code%.%original_file_name%
+    ignore:
+      - /Resources/Private/Language/da.*
+      - /Resources/Private/Language/de.*
+      - /Resources/Private/Language/fr.*
+      - /Resources/Private/Language/hu.*
+      - /Resources/Private/Language/it.*
+      - /Resources/Private/Language/t3.*
