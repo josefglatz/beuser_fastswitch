@@ -19,6 +19,11 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class BackendUserPreviewToolbarItem implements ToolbarItemInterface
 {
+    /*
+     * @var BackendUserRepository
+     */
+    private $backendUserRepository;
+
     /**
      * @var QueryResultInterface|null
      */
@@ -27,8 +32,9 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(BackendUserRepository $backendUserRepository)
     {
+        $this->backendUserRepository = $backendUserRepository;
         $this->loadAvailableBeUsers();
         $this->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
     }
