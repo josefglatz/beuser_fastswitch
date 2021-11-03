@@ -1,4 +1,4 @@
-define(['jquery', 'TYPO3/CMS/Backend/jquery.clearable'], function ($) {
+define(['jquery'], function ($) {
   var BeuserFastswitch = {};
 
   BeuserFastswitch.init = function () {
@@ -6,7 +6,6 @@ define(['jquery', 'TYPO3/CMS/Backend/jquery.clearable'], function ($) {
       e.preventDefault();
     });
     $('#beuser-fastswitch-search-mask')
-      .clearable()
       .on('keyup', BeuserFastswitch.delay(function (e) {
         var search = $('#beuser-fastswitch-search-mask').val(),
           ajaxUrl = TYPO3.settings.ajaxUrls['beuser_fastswitch_backend_userlookup'],
