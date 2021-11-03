@@ -37,7 +37,7 @@ searching for it.
 
 ## Requirements
 
-1. TYPO3 core version support: 8.7 LTS, 9.5 LTS, 10.0, 10.1.0-dev
+1. TYPO3 core version support: 10 LTS, 11 LTS
 2. PHP version: >= 7.2
 
 ## Installation

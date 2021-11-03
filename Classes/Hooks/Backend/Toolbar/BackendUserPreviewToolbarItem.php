@@ -3,7 +3,6 @@
 namespace JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar;
 
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
-use JosefGlatz\BeuserFastswitch\Service\VersionService;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Page\PageRenderer;
@@ -40,6 +39,16 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     }
 
     /**
+     * Loads all eligible backend users
+     */
+    public function loadAvailableBeUsers(): void
+    {
+        if ($this->checkAccess()) {
+            $this->availableUsers = $this->getBackendUserRows();
+        }
+    }
+
+    /**
      * Checks whether
      * - the user has access to this toolbar item
      * - the toolbar item isn't disabled via UserTSConfig
@@ -50,16 +59,6 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     {
         $conf = $this->getBackendUserAuthentication()->getTSConfig()['options.']['backendToolbarItem.']['beUserFastwitch.']['disabled'];
         return (int)$conf !== 1 && $this->getBackendUserAuthentication()->isAdmin() && !$this->getBackendUserAuthentication()->user['ses_backuserid'];
-    }
-
-    /**
-     * Loads all eligible backend users
-     */
-    public function loadAvailableBeUsers(): void
-    {
-        if ($this->checkAccess()) {
-            $this->availableUsers = $this->getBackendUserRows();
-        }
     }
 
     /**
@@ -132,11 +131,9 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
 
     /**
      * Returns a new standalone view, shorthand function
-     * @TODO: Add extConf option to add additional fluid relevant paths
      *
      * @param string $filename Which templateFile should be used.
      * @return StandaloneView
-     * @throws InvalidExtensionNameException
      */
     protected function getFluidTemplateObject(string $filename): StandaloneView
     {
