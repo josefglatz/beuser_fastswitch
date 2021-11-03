@@ -13,7 +13,7 @@
 	"homepage": "http://josefglatz.at",
 	"license": "GPL-3.0",
 	"require": {
-		"typo3/cms-core": "^8.7 || ^9.5 || ^10",
+		"typo3/cms-core": "^8.7 || ^9.5 || ^10 || ^11",
 		"php": ">=7.2"
 	},
 	"autoload": {
