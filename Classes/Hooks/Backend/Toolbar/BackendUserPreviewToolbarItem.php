@@ -78,8 +78,6 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
         $view = $this->getFluidTemplateObject('DropDown.html');
         $view->assignMultiple([
             'users' => $this->availableUsers,
-            'isVersion8' => VersionService::isVersion8(),
-            'isVersion10' => VersionService::isVersion10(),
         ]);
         return $view->render();
     }

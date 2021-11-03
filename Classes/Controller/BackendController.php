@@ -3,13 +3,10 @@
 namespace JosefGlatz\BeuserFastswitch\Controller;
 
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
-use JosefGlatz\BeuserFastswitch\Service\VersionService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-// @TODO: TYPO3_8-7 support removal: Use statement `TYPO3\CMS\Core\Utility\VersionNumberUtility` can be removed
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
@@ -42,8 +39,6 @@ class BackendController extends ActionController
     }
 
     /**
-     * @TODO: TYPO3_8-7 support removal: Method userLookupAction(): second parameter can be removed
-     *
      * @param ServerRequestInterface $request
      * @param ResponseInterface|null $response
      * @return ResponseInterface
@@ -79,18 +74,8 @@ class BackendController extends ActionController
         $view->assignMultiple(
             [
                 'users' => $userList,
-                'isVersion8' => VersionService::isVersion8(),
-                'isVersion10' => VersionService::isVersion10(),
             ]
         );
-
-        // @TODO: TYPO3_8-7 support removal: Remove conditional switch for response
-        if (VersionService::isVersion8() && $response !== null) {
-            $response->getBody()->write($view->render());
-            $response = $response->withHeader('Content-Type', 'text/html; charset=utf-8');
-
-            return $response;
-        }
 
         return new HtmlResponse($view->render());
     }
