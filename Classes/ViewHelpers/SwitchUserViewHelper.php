@@ -36,6 +36,7 @@ class SwitchUserViewHelper extends AbstractViewHelper
     public function initializeArguments()
     {
         $this->registerArgument('backendUser', BackendUser::class, 'Target backendUser to switch active session to', true);
+        $this->registerArgument('class', 'string', 'Css class(es) for <a\/> tag', false);
     }
 
     /**
@@ -63,7 +64,7 @@ class SwitchUserViewHelper extends AbstractViewHelper
 
         return '
             <typo3-backend-switch-user targetUser="' . htmlspecialchars((string)$targetUser->getUid()) . '">
-                <button type="button" class="btn btn-default" title="' . htmlspecialchars(LocalizationUtility::translate('toolbar.beuser.fastswitch.dropdown.user.btn.switch', 'beuser_fastswitch') ?? '') . '">'
+                <button type="button" class="' . $arguments['class'] . '" title="' . htmlspecialchars(LocalizationUtility::translate('toolbar.beuser.fastswitch.dropdown.user.btn.switch', 'beuser_fastswitch') ?? '') . '">'
             . $iconFactory->getIcon('actions-system-backend-user-switch', Icon::SIZE_SMALL)->render() .
             '</button>
             </typo3-switch-user-button>';
