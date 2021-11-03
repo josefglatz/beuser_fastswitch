@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  JosefGlatz\BeuserFastswitch\:
+    resource: '../Classes/*'
+
+  JosefGlatz\BeuserFastswitch\Controller\:
+    resource: '../Classes/Controller/*'
+    public: true
+
+  JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar\:
+    resource: '../Classes/Hooks/Backend/Toolbar/*'
+    public: true

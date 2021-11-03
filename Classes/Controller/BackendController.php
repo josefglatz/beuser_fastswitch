@@ -8,34 +8,37 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class BackendController extends ActionController
 {
+    /*
+     * @var BackendUserRepository
+     */
+    private $backendUserRepository;
+
+    public function __construct(BackendUserRepository $backendUserRepository)
+    {
+        $this->backendUserRepository = $backendUserRepository;
+    }
+
     /**
      * @param string $search
      * @return QueryResultInterface
-     * @throws InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     protected function findUserBySearchWord(string $search): QueryResultInterface
     {
-        $beusersRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(BackendUserRepository::class);
-        return $beusersRepository->findByMultipleProperties($search);
+        return $this->backendUserRepository->findByMultipleProperties($search);
     }
 
     /**
      * @return QueryResultInterface
-     * @throws InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     protected function findUsers(): QueryResultInterface
     {
-        $beusersRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(BackendUserRepository::class);
-        return $beusersRepository->findNonAdmins();
+        return $this->backendUserRepository->findNonAdmins();
     }
 
     /**
