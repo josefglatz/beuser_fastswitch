@@ -7,10 +7,8 @@ services:
   JosefGlatz\BeuserFastswitch\:
     resource: '../Classes/*'
 
-  JosefGlatz\BeuserFastswitch\Controller\:
-    resource: '../Classes/Controller/*'
+  JosefGlatz\BeuserFastswitch\Controller\BackendController:
     public: true
 
-  JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar\:
-    resource: '../Classes/Hooks/Backend/Toolbar/*'
+  JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar\BackendUserPreviewToolbarItem:
     public: true
