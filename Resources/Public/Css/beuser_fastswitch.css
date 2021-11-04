@@ -10,7 +10,7 @@
 .beuser-fastswitch__useritem {
 	display: flex;
 	margin-bottom: 10px;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 .beuser-fastswitch__useritem:hover,
 .beuser-fastswitch__useritem:focus {
@@ -34,7 +34,10 @@
 	display: flex;
 	align-items: center;
 }
-.beuser-fastswitch__useritem-actions .btn.disabled {
-	opacity: 0 !important;
-	width: 24px !important;
+.beuser-fastswitch__useritem-actions .dropdown-table-actions-btn {
+	border: 0 solid;
+	background-color: transparent;
+	color: #f5f5f5;
+	width: 26px;
+	height: 26px;
 }
