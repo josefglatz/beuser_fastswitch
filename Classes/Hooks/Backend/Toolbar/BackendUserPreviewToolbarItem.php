@@ -11,7 +11,6 @@ use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use TYPO3\CMS\Core\Session\UserSession;
 
 /**
  * Main functionality to render a list of backend users to which it is possible to switch as an admin
@@ -22,11 +21,6 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      * @var BackendUserRepository
      */
     private $backendUserRepository;
-
-    /**
-     * @var UserSession
-     */
-    private $userSession;
 
     /**
      * @var PageRenderer
@@ -43,14 +37,12 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      */
     public function __construct(
         BackendUserRepository $backendUserRepository,
-        PageRenderer $pageRenderer,
-        // UserSession $userSession
+        PageRenderer $pageRenderer
         ) {
             $this->backendUserRepository = $backendUserRepository;
             $this->loadAvailableBeUsers();
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
             $this->pageRenderer = $pageRenderer;
-            // $this->userSession =
     }
 
     /**
@@ -72,9 +64,10 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      */
     public function checkAccess(): bool
     {
-        // var_dump($this->userSession->getData());die();
+        $backendUser = $this->getBackendUser();
         $conf = $this->getBackendUserAuthentication()->getTSConfig()['options.']['backendToolbarItem.']['beUserFastwitch.']['disabled'] ?? false;
-        return (int)$conf !== 1 && $this->getBackendUserAuthentication()->isAdmin();
+
+        return (int)$conf !== 1 && $this->getBackendUserAuthentication()->isAdmin() && !(int)$backendUser->getOriginalUserIdWhenInSwitchUserMode();
     }
 
     /**
@@ -182,5 +175,10 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
         }
 
         return null;
+    }
+
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
     }
 }
