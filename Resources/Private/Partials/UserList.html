@@ -34,15 +34,14 @@
 </f:if>
 
 <f:section name="Info">
-	<f:if condition="{isVersion10}">
-		<f:then><f:variable name="onclickValue">top.TYPO3.InfoWindow.showItem('be_users', '{user.uid}'); return false;</f:variable></f:then>
-		<f:else><f:variable name="onclickValue">top.launchView('be_users', '{user.uid}'); return false;</f:variable></f:else>
-	</f:if>
-	<a class="dropdown-table-actions-btn dropdown-table-actions-btn-edit" href="#"
-		 onclick="{onclickValue}"
+	<button class="dropdown-table-actions-btn dropdown-table-actions-btn-edit"
+		 type="button"
+		 aria-haspopup="dialog"
+		 data-dispatch-action="TYPO3.InfoWindow.showItem"
+		 data-dispatch-args-list="be_users,{user.uid}"
 		 title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.btn.info', arguments: {0:user.username})}">
 		<core:icon identifier="actions-document-info" alternativeMarkupIdentifier="inline"/>
-	</a>
+	</button>
 </f:section>
 
 <f:section name="Switch">

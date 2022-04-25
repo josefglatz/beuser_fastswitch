@@ -2,15 +2,7 @@
 			data-namespace-typo3-fluid="true">
 <f:if condition="{users}">
 	<f:then>
-		<f:comment><!-- @TODO: TYPO3_8-7 support removal: Fluid condition can be removed --></f:comment>
-		<f:if condition="{isVersion8}">
-			<f:then>
-				<f:render partial="TYPO3_8-7/UserList" arguments="{users: users}"/>
-			</f:then>
-			<f:else>
-				<f:render partial="UserList" arguments="{users: users}"/>
-			</f:else>
-		</f:if>
+		<f:render partial="UserList" arguments="{users: users}"/>
 	</f:then>
 	<f:else>
 		<p>

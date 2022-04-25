@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3') or die();
 call_user_func(
     static function ($extKey) {
         // Only backend relevant stuff
