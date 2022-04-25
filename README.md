@@ -10,7 +10,7 @@ Fast Backend User Switch (TYPO3 Extension `beuser_fastswitch`)
 
 * Switch to another backend user
 * Edit another backend user (in a new tab)
-* Show user info of a specific backend user (in a popup)
+* Show user info of a specific backend user (in a modal)
 
 ### It provides an AJAX based search
 
@@ -37,7 +37,7 @@ searching for it.
 
 ## Requirements
 
-1. TYPO3 core version support: 10 LTS, 11 LTS
+1. TYPO3 core version support: 11 LTS, 12-dev
 2. PHP version: >= 7.2
 
 ## Installation
@@ -47,6 +47,8 @@ searching for it.
 The recommended way to install the extension is by using
 [Composer](https://getcomposer.org/). In your Composer based TYPO3
 project root, just do `composer require josefglatz/beuser-fastswitch`.
+
+> **TYPO3 core version =< 10 LTS support by using version 3.x:** `composer req josefglatz/beuser-fastswitch:^3`
 
 ### Installation as extension from TYPO3 Extension Repository (TER)
 
