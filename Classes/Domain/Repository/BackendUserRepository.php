@@ -75,30 +75,20 @@ class BackendUserRepository extends \TYPO3\CMS\Beuser\Domain\Repository\BackendU
         $this->objectType = BackendUser::class;
         $queryBuilder = $this->createQuery();
 
+        $constraints[] = $queryBuilder->equals('admin', 0);
+        $constraints[] = $queryBuilder->equals('deleted', 0);
+        if (!empty($uids)) {
+            $constraints[] = $queryBuilder->in('uid', $uids);
+        }
+
+        // @todo Remove TYPO3v11 support: remove if
         if ($this->typo3Version === '12.0') {
-            // @todo Rework conditional "$queryBuilder->in()" constraint if possible
-            if (!empty($uids)) {
-                $queryBuilder->matching(
-                    $queryBuilder->logicalAnd(
-                        $queryBuilder->equals('admin', 0),
-                        $queryBuilder->equals('deleted', 0),
-                        $queryBuilder->in('uid', $uids)
-                    )
-                );
-            } else {
-                $queryBuilder->matching(
-                    $queryBuilder->logicalAnd(
-                        $queryBuilder->equals('admin', 0),
-                        $queryBuilder->equals('deleted', 0),
-                    )
-                );
-            }
+            $queryBuilder->matching(
+                $queryBuilder->logicalAnd(
+                    ...$constraints
+                )
+            );
         } else {
-            $constraints[] = $queryBuilder->equals('admin', 0);
-            $constraints[] = $queryBuilder->equals('deleted', 0);
-            if (!empty($uids)) {
-                $constraints[] = $queryBuilder->in('uid', $uids);
-            }
             $queryBuilder->matching(
                 $queryBuilder->logicalAnd($constraints)
             );
