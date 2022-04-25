@@ -11,16 +11,27 @@ use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\Session\UserSession;
 
 /**
  * Main functionality to render a list of backend users to which it is possible to switch as an admin
  */
 class BackendUserPreviewToolbarItem implements ToolbarItemInterface
 {
-    /*
+    /**
      * @var BackendUserRepository
      */
     private $backendUserRepository;
+
+    /**
+     * @var UserSession
+     */
+    private $userSession;
+
+    /**
+     * @var PageRenderer
+     */
+    protected PageRenderer $pageRenderer;
 
     /**
      * @var QueryResultInterface|null
@@ -30,11 +41,16 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     /**
      * Constructor
      */
-    public function __construct(BackendUserRepository $backendUserRepository)
-    {
-        $this->backendUserRepository = $backendUserRepository;
-        $this->loadAvailableBeUsers();
-        $this->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
+    public function __construct(
+        BackendUserRepository $backendUserRepository,
+        PageRenderer $pageRenderer,
+        // UserSession $userSession
+        ) {
+            $this->backendUserRepository = $backendUserRepository;
+            $this->loadAvailableBeUsers();
+            $pageRenderer->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
+            $this->pageRenderer = $pageRenderer;
+            // $this->userSession =
     }
 
     /**
@@ -56,8 +72,9 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      */
     public function checkAccess(): bool
     {
-        $conf = $this->getBackendUserAuthentication()->getTSConfig()['options.']['backendToolbarItem.']['beUserFastwitch.']['disabled'];
-        return (int)$conf !== 1 && $this->getBackendUserAuthentication()->isAdmin() && !$this->getBackendUserAuthentication()->user['ses_backuserid'];
+        // var_dump($this->userSession->getData());die();
+        $conf = $this->getBackendUserAuthentication()->getTSConfig()['options.']['backendToolbarItem.']['beUserFastwitch.']['disabled'] ?? false;
+        return (int)$conf !== 1 && $this->getBackendUserAuthentication()->isAdmin();
     }
 
     /**
@@ -165,15 +182,5 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
         }
 
         return null;
-    }
-
-    /**
-     * Returns current PageRenderer
-     *
-     * @return PageRenderer
-     */
-    protected function getPageRenderer(): PageRenderer
-    {
-        return GeneralUtility::makeInstance(PageRenderer::class);
     }
 }
