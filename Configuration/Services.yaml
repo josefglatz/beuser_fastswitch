@@ -12,3 +12,5 @@ services:
 
   JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar\BackendUserPreviewToolbarItem:
     public: true
+    tags:
+      - name: backend.toolbar.item
