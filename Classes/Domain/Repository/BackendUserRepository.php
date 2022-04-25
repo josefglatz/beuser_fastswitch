@@ -23,16 +23,16 @@ class BackendUserRepository extends \TYPO3\CMS\Beuser\Domain\Repository\BackendU
         $queryBuilder = $this->createQuery();
 
         $queryBuilder->matching(
-            $queryBuilder->logicalAnd([
+            $queryBuilder->logicalAnd(
                 $queryBuilder->equals('admin', 0),
                 $queryBuilder->equals('deleted', 0),
-                $queryBuilder->logicalOr([
+                $queryBuilder->logicalOr(
                     $queryBuilder->like('username', "%$search%"),
                     $queryBuilder->like('realName', "%$search%"),
                     $queryBuilder->like('email', "%$search%"),
                     $queryBuilder->equals('uid', (int)$search)
-                ])
-            ])
+                )
+            )
         );
         $queryBuilder->setOrderings([
             'lastlogin' => QueryInterface::ORDER_DESCENDING,
@@ -51,14 +51,24 @@ class BackendUserRepository extends \TYPO3\CMS\Beuser\Domain\Repository\BackendU
         $this->objectType = BackendUser::class;
         $queryBuilder = $this->createQuery();
 
-        $constraints[] = $queryBuilder->equals('admin', 0);
-        $constraints[] = $queryBuilder->equals('deleted', 0);
+    // @todo Rework conditional "$queryBuilder->in()" constraint if possible
         if (!empty($uids)) {
-            $constraints[] = $queryBuilder->in('uid', $uids);
+            $queryBuilder->matching(
+                $queryBuilder->logicalAnd(
+                    $queryBuilder->equals('admin', 0),
+                    $queryBuilder->equals('deleted', 0),
+                    $queryBuilder->in('uid', $uids)
+                )
+            );
+        } else {
+            $queryBuilder->matching(
+                $queryBuilder->logicalAnd(
+                    $queryBuilder->equals('admin', 0),
+                    $queryBuilder->equals('deleted', 0),
+                )
+            );
         }
-        $queryBuilder->matching(
-            $queryBuilder->logicalAnd($constraints)
-        );
+
         $queryBuilder->setOrderings([
             'lastlogin' => QueryInterface::ORDER_DESCENDING,
         ]);
