@@ -24,9 +24,7 @@
 				</a>
 				<div class="beuser-fastswitch__useritem-actions">
 					<f:render section="Info" arguments="{user: user}"/>
-					<f:if condition="!{user.isDisabled}">
-						<f:render section="Switch" arguments="{user: user}" />
-					</f:if>
+					<f:render section="Switch" arguments="{user: user}" />
 				</div>
 			</div>
 		</f:for>
