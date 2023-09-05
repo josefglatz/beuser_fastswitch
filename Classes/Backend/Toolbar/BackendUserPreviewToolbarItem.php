@@ -63,7 +63,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
      */
     public function checkAccess(): bool
     {
-        $backendUser = $this->getBackendUser();
+        $backendUser = $this->getBackendUserAuthentication();
         $conf = $this->getBackendUserAuthentication()->getTSConfig()['options.']['backendToolbarItem.']['beUserFastwitch.']['disabled'] ?? false;
 
         return (int)$conf !== 1 && $this->getBackendUserAuthentication()->isAdmin() && !(int)$backendUser->getOriginalUserIdWhenInSwitchUserMode();
@@ -154,10 +154,5 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
         }
 
         return null;
-    }
-
-    protected function getBackendUser(): BackendUserAuthentication
-    {
-        return $GLOBALS['BE_USER'];
     }
 }
