@@ -36,8 +36,6 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
     protected $availableUsers = null;
     private ServerRequestInterface $request;
 
-    protected bool $newImplementation;
-
     /**
      * Constructor
      */
@@ -50,7 +48,6 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
             $this->loadAvailableBeUsers();
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
             $this->pageRenderer = $pageRenderer;
-            $this->newImplementation = true;
     }
 
     /**
@@ -90,10 +87,9 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
      */
     public function getItem(): string
     {
-        if ($this->newImplementation) {
-            $view = $this->backendViewFactory->create($this->request, ['josefglatz/beuser-fastswitch']);
-            $view->render('ToolbarItem.html');
-        }
+        $view = $this->backendViewFactory->create($this->request, ['josefglatz/beuser-fastswitch']);
+
+        return $view->render('ToolbarItem.html');
     }
 
     /**
@@ -104,11 +100,12 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
      */
     public function getDropDown(): string
     {
-        $view = $this->getFluidTemplateObject('DropDown.html');
+        $view = $this->backendViewFactory->create($this->request,  ['josefglatz/beuser-fastswitch']);
         $view->assignMultiple([
             'users' => $this->availableUsers,
         ]);
-        return $view->render();
+
+        return $view->render('DropDown.html');
     }
 
     /**
