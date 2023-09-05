@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar;
+namespace JosefGlatz\BeuserFastswitch\Backend\Toolbar;
 
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
 use Psr\Http\Message\ServerRequestInterface;
@@ -8,12 +8,9 @@ use TYPO3\CMS\Backend\Toolbar\RequestAwareToolbarItemInterface;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Backend\View\BackendViewFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Main functionality to render a list of backend users to which it is possible to switch as an admin
@@ -26,11 +23,6 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
     private $backendUserRepository;
 
     /**
-     * @var PageRenderer
-     */
-    protected PageRenderer $pageRenderer;
-
-    /**
      * @var QueryResultInterface|null
      */
     protected $availableUsers = null;
@@ -41,13 +33,10 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
      */
     public function __construct(
         BackendUserRepository $backendUserRepository,
-        PageRenderer $pageRenderer,
         private readonly BackendViewFactory $backendViewFactory,
         ) {
             $this->backendUserRepository = $backendUserRepository;
             $this->loadAvailableBeUsers();
-            $pageRenderer->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
-            $this->pageRenderer = $pageRenderer;
     }
 
     /**

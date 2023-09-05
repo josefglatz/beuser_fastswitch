@@ -10,7 +10,7 @@ services:
   JosefGlatz\BeuserFastswitch\Controller\BackendController:
     public: true
 
-  JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar\BackendUserPreviewToolbarItem:
+  JosefGlatz\BeuserFastswitch\Backend\Toolbar\BackendUserPreviewToolbarItem:
     public: true
     tags:
       - name: backend.toolbar.item
