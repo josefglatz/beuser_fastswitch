@@ -3,7 +3,7 @@
 			data-namespace-typo3-fluid="true">
 
 <h3 class="dropdown-headline">
-	{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.title')}
+	{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.title', extensionName: 'beuser_fastswitch')}
 </h3>
 <hr>
 <f:if condition="{users}">
@@ -18,9 +18,9 @@
 						<input
 							type="text"
 							class="form-control t3js-clearable"
-							placeholder="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.placeholder')}"
+							placeholder="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.placeholder', extensionName: 'beuser_fastswitch')}"
 							id="beuser-fastswitch-search-mask"
-							title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.title')}"
+							title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.title', extensionName: 'beuser_fastswitch')}"
 							autocomplete="off"/>
 					</div>
 				</div>
