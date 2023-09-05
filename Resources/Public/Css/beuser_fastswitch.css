@@ -10,7 +10,7 @@
 .beuser-fastswitch__useritem {
 	display: flex;
 	margin-bottom: 10px;
-	margin-right: 10px;
+	/*margin-right: 10px;*/
 }
 .beuser-fastswitch__useritem:hover,
 .beuser-fastswitch__useritem:focus {
@@ -40,4 +40,15 @@
 	color: #f5f5f5;
 	width: 26px;
 	height: 26px;
+}
+
+.beuser-fastswitch__useritem-actions .dropdown-table-actions-btn:hover {
+	color: var(--typo3-list-item-hover-color);
+	background-color: var(--typo3-list-item-hover-bg);
+	outline: 1px solid var(--typo3-list-item-hover-border-color);
+}
+
+.beuser-fastswitch__useritem-actions .dropdown-table-actions-btn-switchto:hover {
+	background-color: var(--badge-danger-bg);
+	outline: 1px solid var(--typo3-list-item-hover-border-color);
 }

@@ -5,7 +5,7 @@
 <f:if condition="{users}">
 	<f:then>
 		<f:for each="{users}" as="user">
-			<div class="beuser-fastswitch__useritem">
+			<div class="beuser-fastswitch__useritem dropdown-item">
 				<div class="beuser-fastswitch__useritem-icon">
 					<a href="#"
 						 class="t3js-contextmenutrigger"
@@ -43,6 +43,6 @@
 </f:section>
 
 <f:section name="Switch">
-	<buf:switchUser backendUser="{user}" class="dropdown-table-actions-btn dropdown-table-actions-btn-delete"/>
+	<buf:switchUser backendUser="{user}" class="dropdown-table-actions-btn dropdown-table-actions-btn-switchto"/>
 </f:section>
 </html>
