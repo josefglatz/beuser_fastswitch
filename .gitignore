@@ -1,2 +1,6 @@
 .DS_Store
 .idea
+/Build/node_modules
+/composer.lock
+/.php_cs.cache
+/Documentation-GENERATED-temp
