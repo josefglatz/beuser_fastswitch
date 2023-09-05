@@ -156,6 +156,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
 
         $view->setTemplate($filename);
 
+        // @todo: re-think setting the request in StandaloneView via $GLOBALS['TYPO3_REQUEST']
         $view->setRequest($GLOBALS['TYPO3_REQUEST']);
         return $view;
     }
