@@ -3,7 +3,8 @@
 
 <f:be.pageRenderer
 	includeJavaScriptModules="{
-        0: '@josefglatz/beuser-fastswitch/BeuserFastswitch.js'
+        0: '@josefglatz/beuser-fastswitch/BeuserFastswitch.js',
+        1: '@josefglatz/beuser-fastswitch/BeuserFastswitch-es6.js'
     }"
 />
 
@@ -16,13 +17,10 @@
 		<form action="" role="search" name="beuser-fastswitch-search" id="beuser-fastswitch-search-form">
 			<div class="form-group dropdown-item-text">
 				<div class="form-control-holder">
-					<div class="form-control-icon">
-						<core:icon identifier="apps-toolbar-menu-search" size="small"/>
-					</div>
-					<div class="form-control-clearable">
+					<div class="form-control-clearable-wrapper">
 						<input
 							type="text"
-							class="form-control t3js-clearable"
+							class="form-control form-control-clearable t3js-clearable"
 							placeholder="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.placeholder', extensionName: 'beuser_fastswitch')}"
 							id="beuser-fastswitch-search-mask"
 							title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.search.title', extensionName: 'beuser_fastswitch')}"
