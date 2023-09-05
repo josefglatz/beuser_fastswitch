@@ -3,7 +3,10 @@
 namespace JosefGlatz\BeuserFastswitch\Hooks\Backend\Toolbar;
 
 use JosefGlatz\BeuserFastswitch\Domain\Repository\BackendUserRepository;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Toolbar\RequestAwareToolbarItemInterface;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
+use TYPO3\CMS\Backend\View\BackendViewFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -15,7 +18,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 /**
  * Main functionality to render a list of backend users to which it is possible to switch as an admin
  */
-class BackendUserPreviewToolbarItem implements ToolbarItemInterface
+class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwareToolbarItemInterface
 {
     /**
      * @var BackendUserRepository
@@ -31,18 +34,23 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      * @var QueryResultInterface|null
      */
     protected $availableUsers = null;
+    private ServerRequestInterface $request;
+
+    protected bool $newImplementation;
 
     /**
      * Constructor
      */
     public function __construct(
         BackendUserRepository $backendUserRepository,
-        PageRenderer $pageRenderer
+        PageRenderer $pageRenderer,
+        private readonly BackendViewFactory $backendViewFactory,
         ) {
             $this->backendUserRepository = $backendUserRepository;
             $this->loadAvailableBeUsers();
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/BeuserFastswitch/BeuserFastswitch');
             $this->pageRenderer = $pageRenderer;
+            $this->newImplementation = true;
     }
 
     /**
@@ -53,6 +61,11 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
         if ($this->checkAccess()) {
             $this->availableUsers = $this->getBackendUserRows();
         }
+    }
+
+    public function setRequest(ServerRequestInterface $request): void
+    {
+        $this->request = $request;
     }
 
     /**
@@ -74,11 +87,13 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
      * Render toolbar icon via Fluid
      *
      * @return string HTML
-     * @throws InvalidExtensionNameException
      */
     public function getItem(): string
     {
-        return $this->getFluidTemplateObject('ToolbarItem.html')->render();
+        if ($this->newImplementation) {
+            $view = $this->backendViewFactory->create($this->request, ['josefglatz/beuser-fastswitch']);
+            $view->render('ToolbarItem.html');
+        }
     }
 
     /**
@@ -109,7 +124,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
     }
 
     /**
-     * This item has a drop down
+     * This item has always a dropdown
      *
      * @return bool
      */
@@ -156,8 +171,8 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
 
         $view->setTemplate($filename);
 
-        // @todo: re-think setting the request in StandaloneView via $GLOBALS['TYPO3_REQUEST']
-        $view->setRequest($GLOBALS['TYPO3_REQUEST']);
+        // @todo: TYPO3 13 LTS: re-think setting the request in StandaloneView via $GLOBALS['TYPO3_REQUEST']
+        $view->setRequest($this->request);
         return $view;
     }
 
