@@ -5,8 +5,8 @@
 		<f:render partial="UserList" arguments="{users: users}"/>
 	</f:then>
 	<f:else>
-		<p>
-			{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.noUsers')}
+		<p class="dropdown-item-text">
+			{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.noUsers', extensionName: 'beuser_fastswitch')}
 		</p>
 	</f:else>
 </f:if>
