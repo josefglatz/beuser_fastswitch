@@ -2,6 +2,12 @@
 			xmlns:buf="http://typo3.org/ns/JosefGlatz/BeuserFastswitch/ViewHelpers"
 			data-namespace-typo3-fluid="true">
 
+<f:be.pageRenderer
+	includeJavaScriptModules="{
+        0: '@josefglatz/beuser-fastswitch/BeuserFastswitch.js'
+    }"
+/>
+
 <h3 class="dropdown-headline">
 	{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.title', extensionName: 'beuser_fastswitch')}
 </h3>
