@@ -22,7 +22,7 @@ You can search users by **`realName`**, **`username`**, **`email`** or
 The results are always ordered by `lastlogin DESC`. Since this speeds up
 also the support if some editor is calling you that something isn't
 working. You can then easily switch to the backend user without
-searching for it.
+searching for it in the TYPO3 backend user module.
 
 ### User list item features
 
@@ -37,8 +37,16 @@ searching for it.
 
 ## Requirements
 
-1. TYPO3 core version support: 11 LTS, 12-dev
-2. PHP version: >= 7.2
+**Actual develop-Branch:**
+
+1. TYPO3 core version support: 12 LTS
+2. PHP version: >= 8.1
+
+| TYPO3 version    | Extension version | Notes               | Install                                        |
+|------------------|-------------------|---------------------|------------------------------------------------|
+| 8.7.0 - 10.4.99  | 3.0.1             |                     | `composer req josefglatz/beuser-fastswitch:^3` |
+| 11.5.0 - 11.5.99 | 4.0.3             | no breaking changes | `composer req josefglatz/beuser-fastswitch:^4` |
+| 12.4.5 - 12.4.99 | 5.0.0             | no breaking changes | `composer req josefglatz/beuser-fastswitch:^5` |
 
 ## Installation
 
@@ -48,6 +56,7 @@ The recommended way to install the extension is by using
 [Composer](https://getcomposer.org/). In your Composer based TYPO3
 project root, just do `composer require josefglatz/beuser-fastswitch`.
 
+> **TYPO3 core version === 11 LTS support by using version 4.x:** `composer req josefglatz/beuser-fastswitch:^4`
 > **TYPO3 core version =< 10 LTS support by using version 3.x:** `composer req josefglatz/beuser-fastswitch:^3`
 
 ### Installation as extension from TYPO3 Extension Repository (TER)
@@ -68,10 +77,10 @@ options.backendToolbarItem.beUserFastwitch.disabled = 1
 
 ## Development
 
-> The ongoing development is done within the develop branch!
+> The ongoing development is done within the main branch!
 
 You can use `composer require-dev
-josefglatz/beuser-fastswitch:dev-develop` if you want to test the
+josefglatz/beuser-fastswitch:dev-main` if you want to test the
 current development state.
 
 ---
@@ -82,7 +91,7 @@ http://josefglatz.at/
 
 ## Contribution
 
-* [Alexander Nostadt](https://github.com/AMartinNo1) (Ajax Search)
+* [Alexander Nostadt](https://github.com/AMartinNo1) (Initial ajax search feature)
 
 ## Support
 
