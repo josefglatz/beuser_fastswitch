@@ -151,29 +151,6 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface, RequestAwar
     }
 
     /**
-     * Returns a new standalone view, shorthand function
-     *
-     * @param string $filename Which templateFile should be used.
-     * @return StandaloneView
-     */
-    protected function getFluidTemplateObject(string $filename): StandaloneView
-    {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-
-        $view->setPartialRootPaths([
-            'EXT:backend/Resources/Private/Partials/ToolbarItems',
-            'EXT:beuser_fastswitch/Resources/Private/Partials'
-        ]);
-        $view->setTemplateRootPaths(['EXT:beuser_fastswitch/Resources/Private/Templates']);
-
-        $view->setTemplate($filename);
-
-        // @todo: TYPO3 13 LTS: re-think setting the request in StandaloneView via $GLOBALS['TYPO3_REQUEST']
-        $view->setRequest($this->request);
-        return $view;
-    }
-
-    /**
      * Retrieve available backend users
      *
      * @return QueryResultInterface|null
