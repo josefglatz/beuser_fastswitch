@@ -18,7 +18,7 @@
 				<a class="beuser-fastswitch__useritem-title"
 					 href="{be:uri.editRecord(uid: user.uid, table: 'be_users', returnUrl: returnUrl)}"
 					 target="_new"
-					 title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.userNameTitle', arguments: {0:user.username})}{f:if(condition: '{user.description}', then: ' ({user.description})')}">
+					 title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.userNameTitle', extensionName: 'beuser_fastswitch', arguments: {0:user.username})}{f:if(condition: '{user.description}', then: ' ({user.description})')}">
 					<div class="dropdown-table-title-ellipsis">{user.realName}</div>
 					<span class="text-muted dropdown-table-title-ellipsis">{user.username}</span>
 				</a>
@@ -37,7 +37,7 @@
 		 aria-haspopup="dialog"
 		 data-dispatch-action="TYPO3.InfoWindow.showItem"
 		 data-dispatch-args-list="be_users,{user.uid}"
-		 title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.btn.info', arguments: {0:user.username})}">
+		 title="{f:translate(key: 'toolbar.beuser.fastswitch.dropdown.user.btn.info', extensionName: 'beuser_fastswitch', arguments: {0:user.username})}">
 		<core:icon identifier="actions-document-info" alternativeMarkupIdentifier="inline"/>
 	</button>
 </f:section>

@@ -156,7 +156,7 @@ class BackendUserPreviewToolbarItem implements ToolbarItemInterface
 
         $view->setTemplate($filename);
 
-        $view->getRequest()->setControllerExtensionName('BeuserFastswitch');
+        $view->setRequest($GLOBALS['TYPO3_REQUEST']);
         return $view;
     }
 
