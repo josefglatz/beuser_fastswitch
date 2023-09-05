@@ -33,7 +33,8 @@ searching for it in the TYPO3 backend user module.
 
 ## Screenshots and Demos
 
-![Demo GIF](https://raw.githubusercontent.com/josefglatz/beuser_fastswitch/master/Documentation/Images/beuser-fastswitch-v1-0-2.gif "Extension Demo v1.0.2 and TYPO3 CMS 8.7LTS")
+[<img src="https://i.ytimg.com/vi/VVBjrTTaPHU/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=VVBjrTTaPHU "Extension Demo v5 and TYPO3 CMS 12.4 LTS")
+
 
 ## Requirements
 
