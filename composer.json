@@ -18,7 +18,6 @@
 			"role": "Developer"
 		}
 	],
-	"homepage": "https://josefglatz.at",
 	"license": "GPL-3.0-or-later",
 	"require": {
 		"typo3/cms-core": "^12.4 || dev-main",
