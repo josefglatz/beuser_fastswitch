@@ -1,47 +1,26 @@
-import $ from 'jquery';
+import DocumentService from '@typo3/core/document-service.js'
+import RegularEvent from '@typo3/core/event/regular-event.js';
+import DebounceEvent from '@typo3/core/event/debounce-event.js';
+import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 
-var BeuserFastswitch = {};
-
-BeuserFastswitch.init = function () {
-  $('#beuser-fastswitch-search-form').submit(function (e) {
+DocumentService.ready().then(function () {
+  new RegularEvent('submit', function (e) {
     e.preventDefault();
-  });
-  $('#beuser-fastswitch-search-mask')
-    .on('keyup', BeuserFastswitch.delay(function (e) {
-      var search = $('#beuser-fastswitch-search-mask').val(),
-        ajaxUrl = TYPO3.settings.ajaxUrls['beuser_fastswitch_backend_userlookup'],
-        resultTag = $('#beuser-fastswitch-ajax-result');
+  }).bindTo(document.querySelector('#beuser-fastswitch-search-form'));
 
-      if (search.length >= 1 && e.keyCode !== 13) {
-        var ajaxUrlSearch = ajaxUrl + '&search=' + search;
+  new DebounceEvent('input', function (e) {
+    const searchValue = e.target.value;
+    const resultContainer = document.querySelector('#beuser-fastswitch-ajax-result');
 
-        resultTag.html('');
+    resultContainer.replaceChildren();
 
-        $.get(ajaxUrlSearch, {
-          format: 'html'
-        }).done(function (data) {
-          resultTag.html(data);
-        });
-      }
-      if (search.length === 0) {
-        $.get(ajaxUrl, {
-          format: 'html'
-        }).done(function (data) {
-          resultTag.html(data);
-        });
-      }
-    }, 250));
-};
+    let request = new AjaxRequest(TYPO3.settings.ajaxUrls['beuser_fastswitch_backend_userlookup']);
+    if (searchValue.length >= 1) {
+      request = request.withQueryArguments({search: searchValue});
+    }
 
-BeuserFastswitch.delay = function (callback, ms) {
-  var timer = 0;
-  return function () {
-    var context = this, args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      callback.apply(context, args);
-    }, ms || 0);
-  };
-};
-
-BeuserFastswitch.init();
+    request.get().then(async function (response) {
+      resultContainer.replaceChildren(document.createRange().createContextualFragment(await response.resolve('text/html')));
+    });
+  }, 250).bindTo(document.querySelector('#beuser-fastswitch-search-mask'));
+});
