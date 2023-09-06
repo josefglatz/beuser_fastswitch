@@ -93,6 +93,7 @@ http://josefglatz.at/
 ## Contribution
 
 * [Alexander Nostadt](https://github.com/AMartinNo1) (Initial ajax search feature)
+* [Andreas Fernandez](https://github.com/andreasfernandez) (Rewrite jQuery to ES6 with proper Core API usage)
 
 ## Support
 
