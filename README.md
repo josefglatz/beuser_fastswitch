@@ -35,19 +35,20 @@ searching for it in the TYPO3 backend user module.
 
 [<img src="https://i.ytimg.com/vi/VVBjrTTaPHU/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=VVBjrTTaPHU "Extension Demo v5 and TYPO3 CMS 12.4 LTS")
 
-
 ## Requirements
 
-**Actual develop-Branch:**
+**Actual main-Branch:**
 
 1. TYPO3 core version support: 12 LTS
 2. PHP version: >= 8.1
 
-| TYPO3 version    | Extension version | Notes               | Install                                        |
-|------------------|-------------------|---------------------|------------------------------------------------|
-| 8.7.0 - 10.4.99  | 3.0.1             |                     | `composer req josefglatz/beuser-fastswitch:^3` |
-| 11.5.0 - 11.5.99 | 4.0.3             | no breaking changes | `composer req josefglatz/beuser-fastswitch:^4` |
-| 12.4.5 - 12.4.99 | 5.0.0             | no breaking changes | `composer req josefglatz/beuser-fastswitch:^5` |
+**Version Matrix**
+
+| TYPO3 version    | PHP version    | Extension version | Notes               | Install                                        |
+|------------------|----------------|-------------------|---------------------|------------------------------------------------|
+| 8.7.0 - 10.4.99  | >= 7.2         | 3.x               |                     | `composer req josefglatz/beuser-fastswitch:^3` |
+| 11.5.0 - 11.5.99 | >= 7.2         | 4.x               | no breaking changes | `composer req josefglatz/beuser-fastswitch:^4` |
+| 12.4.5 - 12.4.99 | >= 8.1, =< 8.2 | 5.x               | no breaking changes | `composer req josefglatz/beuser-fastswitch:^5` |
 
 ## Installation
 
