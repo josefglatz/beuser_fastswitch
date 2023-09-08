@@ -28,6 +28,7 @@
 }
 .beuser-fastswitch__useritem-title .dropdown-table-title-ellipsis {
 	max-width: 100%;
+	color: var(--bs-dropdown-link-color);
 }
 .beuser-fastswitch__useritem-actions {
 	margin-left: auto;
@@ -37,7 +38,7 @@
 .beuser-fastswitch__useritem-actions .dropdown-table-actions-btn {
 	border: 0 solid;
 	background-color: transparent;
-	color: #f5f5f5;
+	color: var(--icon-color-primary);
 	width: 26px;
 	height: 26px;
 }
