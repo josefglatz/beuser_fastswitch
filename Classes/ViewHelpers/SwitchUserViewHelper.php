@@ -6,6 +6,7 @@ use TYPO3\CMS\Beuser\Domain\Model\BackendUser;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -59,13 +60,13 @@ class SwitchUserViewHelper extends AbstractViewHelper
             || !$currentUser->isAdmin()
             || $currentUser->getOriginalUserIdWhenInSwitchUserMode() !== null
         ) {
-            return '<span class="' . $arguments['class'] . ' disabled">' . $iconFactory->getIcon('empty-empty', Icon::SIZE_SMALL)->render() . '</span>';
+            return '<span class="' . $arguments['class'] . ' disabled">' . $iconFactory->getIcon('empty-empty', IconSize::SMALL)->render() . '</span>';
         }
 
         return '
             <typo3-backend-switch-user targetUser="' . htmlspecialchars((string)$targetUser->getUid()) . '">
                 <button type="button" class="' . $arguments['class'] . '" title="' . htmlspecialchars(LocalizationUtility::translate('toolbar.beuser.fastswitch.dropdown.user.btn.switch', 'beuser_fastswitch') ?? '') . '">'
-            . $iconFactory->getIcon('actions-system-backend-user-switch', Icon::SIZE_SMALL)->render() .
+            . $iconFactory->getIcon('actions-system-backend-user-switch', IconSize::SMALL)->render() .
             '</button>
             </typo3-switch-user-button>';
     }
