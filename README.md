@@ -39,8 +39,8 @@ searching for it in the TYPO3 backend user module.
 
 **Actual main-Branch:**
 
-1. TYPO3 core version support: 12 LTS
-2. PHP version: >= 8.1
+1. TYPO3 core version support: 13.4 LTS
+2. PHP version: >= 8.2
 
 **Version Matrix**
 
@@ -49,6 +49,7 @@ searching for it in the TYPO3 backend user module.
 | 8.7.0 - 10.4.99  | >= 7.2         | 3.x               |                     | `composer req josefglatz/beuser-fastswitch:^3` |
 | 11.5.0 - 11.5.99 | >= 7.2         | 4.x               | no breaking changes | `composer req josefglatz/beuser-fastswitch:^4` |
 | 12.4.5 - 12.4.99 | >= 8.1, =< 8.2 | 5.x               | no breaking changes | `composer req josefglatz/beuser-fastswitch:^5` |
+| 13.4.0 - 13.4.99 | >= 8.2, =< 8.3 | 6.x               | no breaking changes | `composer req josefglatz/beuser-fastswitch:^6` |
 
 ## Installation
 
@@ -58,6 +59,7 @@ The recommended way to install the extension is by using
 [Composer](https://getcomposer.org/). In your Composer based TYPO3
 project root, just do `composer require josefglatz/beuser-fastswitch`.
 
+> **TYPO3 core version === 12 LTS support by using version 5.x:** `composer req josefglatz/beuser-fastswitch:^5`
 > **TYPO3 core version === 11 LTS support by using version 4.x:** `composer req josefglatz/beuser-fastswitch:^4`
 > **TYPO3 core version =< 10 LTS support by using version 3.x:** `composer req josefglatz/beuser-fastswitch:^3`
 
